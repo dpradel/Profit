@@ -125,6 +125,7 @@
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(14px);
+  text-align: center;
   transition-delay: calc(var(--i) * 120ms);
 }
 

@@ -4,9 +4,9 @@ import { SiteFooter } from "../components/SiteFooter.jsx";
 import { SiteHeader } from "../components/SiteHeader.jsx";
 import DarkVeil from "../components/fx/DarkVeil.jsx";
 import "../styles/contato.css";
-import hqPoa from "../../assets/figma-contato/ct-1.jpeg";
-import hqSp from "../../assets/figma-contato/ct-12.jpeg";
-import hqRio from "../../assets/figma-contato/ct-14.jpeg";
+import hqPoa from "../../assets/figma-contato/ct-1.png";
+import hqSp from "../../assets/figma-contato/ct-12.png";
+import hqRio from "../../assets/figma-contato/ct-14.png";
 
 /* In-view reveal (same pattern as ProfitUltraPage) */
 function useReveal(threshold = 0.15, rootMargin = "0px") {

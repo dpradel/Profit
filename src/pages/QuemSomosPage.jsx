@@ -7,9 +7,9 @@ import "../styles/quemsomos.css";
 import heroImg from "../../assets/figma-quemsomos/qs-1.jpeg";
 import sobreImg from "../../assets/figma-quemsomos/qs-11.jpeg";
 import uniaoImg from "../../assets/figma-quemsomos/qs-13.jpeg";
-import sedePoa from "../../assets/figma-quemsomos/qs-18.jpeg";
-import sedeSp from "../../assets/figma-quemsomos/qs-19.jpeg";
-import sedeRj from "../../assets/figma-quemsomos/qs-20.jpeg";
+import sedePoa from "../../assets/figma-quemsomos/qs-18.png";
+import sedeSp from "../../assets/figma-quemsomos/qs-19.png";
+import sedeRj from "../../assets/figma-quemsomos/qs-20.png";
 
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
