@@ -106,7 +106,7 @@ export const productColumns = [
 ];
 
 export const filesLaunch = {
-  video: "/profit-ultra.mp4",
+  video: `${import.meta.env.BASE_URL}profit-ultra.mp4`,
   eyebrow: "Profit Ultra",
   title: "Apresentamos a evolução do trading.",
   subtitle: "Todo o poder do Profit, elevado à máxima potência.",

@@ -1,4 +1,4 @@
-const icon = (fileName) => `/tool-icons/${fileName}`;
+const icon = (fileName) => `${import.meta.env.BASE_URL}tool-icons/${fileName}`;
 
 export const planLabels = ["Profit Ultra", "Profit Pro", "Profit Plus", "Profit One", "Profit Training"];
 
