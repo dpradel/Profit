@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useInView } from "../hooks/useInView.js";
+import { Button } from "./Button.jsx";
 
 const logos = [
   { file: "agora-investimentos.svg", label: "Agora Investimentos" },
@@ -44,9 +45,7 @@ export function AppStoreSection() {
           <p className="corretoras-body">
             As corretoras parceiras da Nelogica possuem ofertas especiais para traders. Confira as condições da sua corretora para conseguir ótimos descontos ou até mesmo isenção da assinatura.
           </p>
-          <a className="button button-primary corretoras-cta" href="#corretoras">
-            Conferir
-          </a>
+          <Button href="#corretoras" variant="primary">Conferir</Button>
         </div>
       </div>
 
