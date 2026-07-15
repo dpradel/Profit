@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        body, html {
+            width: 100%; height: 100%;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #d0d0d0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .glass-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        /* Top Menu Bar */
+        .menu-bar {
+            height: 32px;
+            background: rgba(15, 15, 15, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 4px;
+            font-size: 11px;
+            color: #ffffff;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-style: italic;
+            font-weight: 700;
+            color: #e0e0e0;
+            margin-right: 12px;
+            padding-right: 12px;
+            border-right: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .logo-area img {
+            height: 18px;
+            width: auto;
+        }
+
+        .menu-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 11px;
+            line-height: 1;
+            white-space: nowrap;
+            background: transparent;
+            box-shadow: none;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(135deg, #38bdf8 0%, #0574de 100%);
+            box-shadow: 0 0 14px rgba(5, 116, 222, 0.65), 0 0 5px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Data Bar */
+        .data-bar {
+            height: 36px;
+            background: rgba(10, 10, 10, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 10px;
+            font-size: 11.5px;
+        }
+
+        .data-flag {
+            width: 16px; height: 16px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .data-flag img { width: 100%; height: 100%; object-fit: contain; }
+
+        .data-ticker { font-weight: 700; color: #fff; font-size: 12px;}
+        .data-timeframe { color: #fff; font-weight: 700; }
+
+        .data-icon {
+            height: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .data-icon img { height: 16px; object-fit: contain; }
+
+        .live-dot {
+            width: 10px; height: 10px; background: #00e600; border-radius: 50%;
+            box-shadow: 0 0 8px #00e600;
+            animation: pulse-dot 2s infinite;
+            margin: 0 4px;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        .data-stats { color: #888; display:flex; gap:6px; align-items:center; }
+        .data-stats span { color: #d0d0d0; font-weight: bold; }
+
+        .data-plus {
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; color: #aaa;
+            margin-left: 4px; background: rgba(0,0,0,0.2);
+        }
+        .data-plus:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+        /* Chart Area */
+        .chart-area {
+            flex: 1;
+            position: relative;
+            background: transparent;
+            display: flex;
+        }
+
+        .chart-canvas-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 15% 35px;
+            cursor: crosshair;
+        }
+
+        .price-axis {
+            width: 55px;
+            background: transparent;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px 0 20px 0;
+            font-size: 10.5px;
+            color: #777;
+            text-align: right;
+            padding-right: 6px;
+            font-family: inherit;
+            position: relative;
+            z-index: 10;
+        }
+
+        .time-axis {
+            position: absolute;
+            bottom: 0; left: 0; right: 55px; height: 24px;
+            background: transparent;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            font-size: 10.5px;
+            color: #777;
+            z-index: 10;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Time Ticks */
+        .time-ticks {
+            display: flex;
+            gap: 45px;
+            position: absolute;
+            font-weight: 500;
+        }
+
+        .time-ticks div {
+             position: relative;
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+        }
+
+        .time-ticks div::before {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            height: 24px;
+            width: 1px;
+            background: rgba(255,255,255,0.05);
+            z-index: -1;
+        }
+
+        .date-label { position: absolute; top: 18px; font-size: 9px; color: #555; }
+
+        /* Current Price Indicator on Axis */
+        .current-price-tag {
+            position: absolute;
+            right: 0;
+            top: 40%;
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            font-size: 10.5px;
+            padding: 3px 5px;
+            border-radius: 4px 0 0 4px;
+            border-left: 3px solid #888;
+            transform: translateY(-50%);
+            z-index: 20;
+            transition: top 0.2s ease-out;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        /* Current Price Line */
+        .current-price-line {
+            position: absolute;
+            left: 0; right: 0;
+            top: 40%;
+            border-top: 1px dashed rgba(255,255,255,0.3);
+            z-index: 5;
+            transition: top 0.2s ease-out;
+        }
+
+        /* Order line & Tags */
+        .order-line-container {
+            position: absolute;
+            left: 0; right: 0;
+            top: 55%;
+            z-index: 6;
+        }
+        .order-line-dashed {
+            position: absolute; left: 0; right: 0; top: 0;
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .order-tags {
+            position: absolute;
+            left: 20px;
+            top: -9px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            pointer-events: none;
+        }
+
+        .order-tag {
+            font-size: 10px; font-weight: bold; border-radius: 3px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: inherit;
+        }
+
+        .tag-d { background: rgba(50,50,50,0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); color: #fff; padding: 0 5px; height: 18px; border: 1px solid rgba(255,255,255,0.1); }
+        .tag-p { background: rgba(0, 180, 0, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid #00d000; color: #22ff22; padding: 0 6px; height: 18px; }
+        .tag-r { border-radius: 50%; width: 16px; height: 16px; color: #fff; border: 1px solid rgba(255,255,255,0.15); }
+        .tag-red { background: #e62222; }
+        .tag-yel { background: #cca300; color: #000; }
+
+        /* Candles Container */
+        .candles-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 24px;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            padding-left: 10px;
+        }
+
+        .candle {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            width: 12px;
+            flex-shrink: 0;
+            height: 100%;
+            transition: filter 0.2s;
+        }
+
+        .candle-wick {
+            width: 2px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .candle-body {
+            width: 100%;
+            position: absolute;
+            border-radius: 2px;
+            z-index: 2;
+            transition: height 0.15s ease-out, top 0.15s ease-out;
+        }
+
+        .candle.bull .candle-wick, .candle.bull .candle-body { background: #22c55e; }
+        .candle.bear .candle-wick, .candle.bear .candle-body { background: #ef4444; }
+
+        /* Interactive Hover Crosshair */
+        .crosshair-x { position: absolute; left: 0; right: 0; height: 1px; border-top: 1px dashed rgba(255,255,255,0.5); opacity: 0; transition: opacity 0.2s; z-index: 30; pointer-events: none;}
+        .crosshair-y { position: absolute; top: 0; bottom: 0; width: 1px; border-left: 1px dashed rgba(255,255,255,0.5); opacity: 0; transition: opacity 0.2s; z-index: 30; pointer-events: none;}
+
+        .ch-price-tag {
+            position: absolute; right: 0; background: #333; color: #fff; font-size: 10.5px; padding: 3px 5px; border-radius: 4px 0 0 4px;
+            border-left: 3px solid #3794fa; transform: translateY(-50%); opacity: 0; transition: opacity 0.2s; z-index: 30; pointer-events: none;
+        }
+
+        /* Measure Tool */
+        .measure-line {
+            position: absolute;
+            height: 1.5px;
+            background: #5ab1ef;
+            transform-origin: 0 50%;
+            display: none;
+            z-index: 25;
+            pointer-events: none;
+        }
+        .measure-line::before, .measure-line::after {
+            content: ''; position: absolute;
+            width: 7px; height: 7px;
+            border-radius: 50%; background: #5ab1ef;
+            top: -2.5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .measure-line::before { left: -3.5px; }
+        .measure-line::after { right: -3.5px; }
+
+        .measure-popup {
+            position: fixed;
+            background: rgba(8, 10, 22, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 40;
+            pointer-events: none;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.55),
+                0 1px 0 rgba(255, 255, 255, 0.06) inset;
+            font-size: 11px;
+            font-family: inherit;
+            min-width: 145px;
+        }
+
+        .mp-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mp-label {
+            color: #d0d0d0;
+            font-weight: 600;
+        }
+
+        .mp-val {
+            color: #fff;
+            font-weight: bold;
+            text-align: right;
+            border-bottom: none;
+        }
+
+        .val-green { color: #00ff00; }
+        .val-red { color: #ff3333; }
+
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+            <div class="logo-area">
+                <img src="logo-do-profit.svg" alt="Profit">
+            </div>
+            <a class="menu-item" href="index.html#/profit-ultra" target="_parent">Profit Ultra</a>
+            <a class="menu-item" href="index.html#/recursos" target="_parent">Recursos</a>
+            <a class="menu-item" href="#comece" target="_parent">Teste grátis</a>
+            <a class="menu-item" href="#suporte" target="_parent">Suporte</a>
+        </div>
+
+        <!-- Data Bar -->
+        <div class="data-bar">
+            <div class="data-flag"><img src="ic-PETR.svg" alt="Petrobras"></div>
+            <div class="data-ticker">PETR4</div>
+            <div class="data-timeframe">15Min</div>
+            <div class="data-icon"><img src="ic-Bovespa.svg" alt="B3"></div>
+            <div class="live-dot"></div>
+            <div class="data-stats">
+                (Abr <span id="valAbr">31,16</span> Máx <span id="valMax">31,16</span> Mín <span id="valMin">30,70</span> Fch <span id="valFch">31,16</span> V <span>0,00%</span>)
+            </div>
+            <div class="data-plus">+</div>
+        </div>
+
+        <!-- Chart Area -->
+        <div class="chart-area" id="chartArea">
+            <div class="chart-canvas-wrapper" id="canvasWrapper">
+
+                <div class="candles-container" id="candlesContainer">
+                    <!-- Candles injected by JS -->
+                </div>
+
+                <!-- Order Line -->
+                <div class="order-line-container">
+                    <div class="order-line-dashed"></div>
+                    <div class="order-tags">
+                        <div class="order-tag tag-d">Z</div>
+                        <div class="order-tag tag-d">R</div>
+                        <div class="order-tag tag-d">S</div>
+                        <div class="order-tag tag-p">R$ 123,45</div>
+                        <div class="order-tag tag-r tag-red" style="padding-top:1px;">+1</div>
+                        <div class="order-tag tag-r tag-yel" style="padding-top:1px;">S</div>
+                    </div>
+                </div>
+
+                <!-- Current Price Line -->
+                <div class="current-price-line" id="currentPriceLine"></div>
+
+                <!-- Crosshairs & Tooltip -->
+                <div class="crosshair-x" id="crossX"></div>
+                <div class="crosshair-y" id="crossY"></div>
+                <div class="ch-price-tag" id="tooltip">31,00</div>
+
+                <!-- Measurement Tool -->
+                <div id="measureBox" class="measure-line"></div>
+
+                <div class="time-axis">
+                    <div class="time-ticks" id="timeTicks">
+                        <!-- times generated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-axis" id="priceAxis">
+                <!-- Prices generated by JS -->
+            </div>
+
+            <div class="current-price-tag" id="currentPriceTag">
+                31,16
+            </div>
+
+            <div id="measurePopup" class="measure-popup">
+                <div class="mp-row"><span class="mp-label">Variação:</span> <span class="mp-val val-green" id="mpVar">10,99%</span></div>
+                <div class="mp-row"><span class="mp-label">Diferença:</span> <span class="mp-val" id="mpDif">3,81</span></div>
+                <div class="mp-row"><span class="mp-label">Ponto 1:</span> <span class="mp-val" id="mpP1">34,70</span></div>
+                <div class="mp-row"><span class="mp-label">Ponto 2:</span> <span class="mp-val" id="mpP2">38,52</span></div>
+                <div class="mp-row"><span class="mp-label">Intervalo:</span> <span class="mp-val" id="mpInt">7 dias</span></div>
+                <div class="mp-row"><span class="mp-label">Candles:</span> <span class="mp-val" id="mpCandles">7</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('candlesContainer');
+        const priceAxis = document.getElementById('priceAxis');
+        const timeTicks = document.getElementById('timeTicks');
+        const currentLine = document.getElementById('currentPriceLine');
+        const currentTag = document.getElementById('currentPriceTag');
+        const orderLine = document.querySelector('.order-line-container');
+
+        const maxPrice = 32.10;
+        const minPrice = 29.80;
+        const priceRange = maxPrice - minPrice;
+
+        // Generate Price Axis Labels
+        let priceHtml = '';
+        for (let p = maxPrice; p >= minPrice; p -= 0.10) {
+            priceHtml += `<span>${p.toFixed(2).replace('.', ',')}</span>`;
+        }
+        priceAxis.innerHTML = priceHtml;
+
+        // Generate Time Axis Ticks
+        let timeHtml = '';
+        const times = [
+            "10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30",
+            "10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30",
+            "10:00","10:30"
+        ];
+
+        for(let i=0; i<times.length; i++) {
+            let dateLabel = "";
+            if (i === 6) dateLabel = "24/jul";
+            if (i === 20) dateLabel = "25/jul";
+            if (i === 28) dateLabel = "28/jul";
+
+            timeHtml += `<div>${times[i]} ${dateLabel ? '<span class="date-label">'+dateLabel+'</span>' : ''}</div>`;
+        }
+        timeTicks.innerHTML = timeHtml;
+
+        function priceToPct(price) {
+            return 100 - ((price - minPrice) / priceRange) * 100;
+        }
+
+        let currentPrice = 30.95;
+        const candlesCount = 80;
+        const data = [];
+
+        const orderPrice = 30.73;
+        orderLine.style.top = priceToPct(orderPrice) + '%';
+
+        const trendTarget = [30.2, 31.4, 30.7, 31.4, 30.8, 31.1];
+        let trendIdx = 0;
+
+        for(let i=0; i<candlesCount; i++) {
+            let open = currentPrice;
+
+            let diff = trendTarget[trendIdx] - currentPrice;
+            if (Math.abs(diff) < 0.2 && trendIdx < trendTarget.length - 1) {
+                trendIdx++;
+            }
+
+            let close = open + (diff * 0.15) + (Math.random() - 0.5) * 0.2;
+            let high = Math.max(open, close) + Math.random() * 0.10;
+            let low = Math.min(open, close) - Math.random() * 0.10;
+
+            high = Math.min(high, maxPrice - 0.05);
+            low = Math.max(low, minPrice + 0.05);
+
+            data.push({open, high, low, close});
+            currentPrice = close;
+        }
+
+        function createCandleDOM(cData) {
+            const el = document.createElement('div');
+            const isBull = cData.close >= cData.open;
+            el.className = `candle ${isBull ? 'bull' : 'bear'}`;
+
+            const topPct = priceToPct(cData.high);
+            const bottomPct = priceToPct(cData.low);
+            const bodyTopPct = priceToPct(Math.max(cData.open, cData.close));
+            const bodyBottomPct = priceToPct(Math.min(cData.open, cData.close));
+
+            const wick = document.createElement('div');
+            wick.className = 'candle-wick';
+            wick.style.top = topPct + '%';
+            wick.style.height = (bottomPct - topPct) + '%';
+
+            const body = document.createElement('div');
+            body.className = 'candle-body';
+            body.style.top = bodyTopPct + '%';
+            body.style.height = Math.max((bodyBottomPct - bodyTopPct), 0.5) + '%';
+
+            el.appendChild(wick);
+            el.appendChild(body);
+            return el;
+        }
+
+        data.forEach(c => {
+            container.appendChild(createCandleDOM(c));
+        });
+
+        let scrollOffset = 0;
+        let timeScrollOffset = 0;
+        const candleTotalWidth = 18;
+        const scrollSpeed = 0.5;
+        const timeTicksEl = document.getElementById('timeTicks');
+
+        function animateScroll() {
+            scrollOffset -= scrollSpeed;
+            timeScrollOffset -= scrollSpeed;
+
+            if (scrollOffset <= -candleTotalWidth) {
+                scrollOffset += candleTotalWidth;
+                data.shift();
+                container.firstElementChild.remove();
+
+                const lastData = data[data.length-1];
+
+                let diff = trendTarget[trendIdx] - currentPrice;
+                if (Math.abs(diff) < 0.2 && trendIdx < trendTarget.length - 1) {
+                    trendIdx++;
+                } else if (Math.abs(diff) < 0.2 && trendIdx === trendTarget.length - 1) {
+                    trendIdx = 0;
+                }
+                currentPrice = currentPrice + (diff * 0.1) + (Math.random() - 0.5) * 0.2;
+
+                const open = lastData.close;
+                const close = open + (Math.random() - 0.5) * 0.15;
+                let high = Math.max(open, close) + Math.random() * 0.08;
+                let low = Math.min(open, close) - Math.random() * 0.08;
+
+                high = Math.min(high, maxPrice - 0.05);
+                low = Math.max(low, minPrice + 0.05);
+
+                const newC = {open, high, low, close};
+                data.push(newC);
+                container.appendChild(createCandleDOM(newC));
+            }
+
+            container.style.transform = `translateX(${scrollOffset}px)`;
+            timeTicksEl.style.transform = `translateX(${timeScrollOffset}px)`;
+
+            if(timeScrollOffset <= -2000) {
+                 timeScrollOffset += 2000;
+            }
+
+            requestAnimationFrame(animateScroll);
+        }
+        requestAnimationFrame(animateScroll);
+
+        function updateLive() {
+            const lastData = data[data.length - 1];
+            const change = (Math.random() - 0.5) * 0.08;
+            lastData.close += change;
+
+            if(lastData.close > lastData.high) lastData.high = Math.min(lastData.close, maxPrice - 0.05);
+            if(lastData.close < lastData.low) lastData.low = Math.max(lastData.close, minPrice + 0.05);
+            lastData.close = Math.max(Math.min(lastData.close, maxPrice - 0.05), minPrice + 0.05);
+
+            const lastEl = container.lastElementChild;
+            const isBull = lastData.close >= lastData.open;
+            lastEl.className = `candle ${isBull ? 'bull' : 'bear'}`;
+
+            const wick = lastEl.querySelector('.candle-wick');
+            const body = lastEl.querySelector('.candle-body');
+
+            wick.style.top = priceToPct(lastData.high) + '%';
+            wick.style.height = (priceToPct(lastData.low) - priceToPct(lastData.high)) + '%';
+
+            body.style.top = priceToPct(Math.max(lastData.open, lastData.close)) + '%';
+            body.style.height = Math.max(priceToPct(Math.min(lastData.open, lastData.close)) - priceToPct(Math.max(lastData.open, lastData.close)), 0.5) + '%';
+
+            currentLine.style.top = priceToPct(lastData.close) + '%';
+            currentTag.style.top = priceToPct(lastData.close) + '%';
+
+            let formattedClose = lastData.close.toFixed(2).replace('.', ',');
+            currentTag.innerHTML = formattedClose;
+            document.getElementById('valFch').innerHTML = formattedClose;
+
+            setTimeout(updateLive, 100 + Math.random() * 300);
+        }
+
+        updateLive();
+
+        const wrapper = document.getElementById('canvasWrapper');
+        const cx = document.getElementById('crossX');
+        const cy = document.getElementById('crossY');
+        const tt = document.getElementById('tooltip');
+
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let dragStartPrice = 0;
+        const measureBox = document.getElementById('measureBox');
+        const measurePopup = document.getElementById('measurePopup');
+
+        wrapper.addEventListener('mousedown', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            dragStartX = e.clientX - rect.left;
+            dragStartY = e.clientY - rect.top;
+            const pct = (dragStartY / rect.height);
+            dragStartPrice = maxPrice - pct * priceRange;
+
+            isDragging = true;
+            measureBox.style.display = 'block';
+            measureBox.style.left = dragStartX + 'px';
+            measureBox.style.top = dragStartY + 'px';
+            measureBox.style.width = '0px';
+            measureBox.style.transform = 'rotate(0deg)';
+            measurePopup.style.display = 'flex';
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        wrapper.addEventListener('mousemove', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            cx.style.opacity = '1';
+            cy.style.opacity = '1';
+            tt.style.opacity = '1';
+
+            cx.style.top = y + 'px';
+            cy.style.left = x + 'px';
+
+            tt.style.top = y + 'px';
+
+            const pct = (y / rect.height);
+            const hoverPrice = maxPrice - pct * priceRange;
+            tt.innerHTML = hoverPrice.toFixed(2).replace('.', ',');
+
+            const candleWidth = 18;
+            if (isDragging) {
+                const wX = x - dragStartX;
+                const wY = y - dragStartY;
+                const length = Math.sqrt(wX * wX + wY * wY);
+                const angle = Math.atan2(wY, wX) * 180 / Math.PI;
+
+                measureBox.style.width = length + 'px';
+                measureBox.style.transform = `rotate(${angle}deg)`;
+
+                measurePopup.style.left = (e.clientX + 15) + 'px';
+                measurePopup.style.top = (e.clientY + 15) + 'px';
+
+                if (e.clientX + 160 > window.innerWidth) measurePopup.style.left = (e.clientX - 150) + 'px';
+                if (e.clientY + 130 > window.innerHeight) measurePopup.style.top = (e.clientY - 130) + 'px';
+
+                const diff = (hoverPrice - dragStartPrice);
+                const varPct = (diff / dragStartPrice) * 100;
+                const wAbs = Math.abs(x - dragStartX);
+                const cCount = Math.max(1, Math.round(wAbs / candleWidth));
+
+                document.getElementById('mpVar').innerHTML = (varPct > 0 ? '+' : '') + varPct.toFixed(2).replace('.', ',') + '%';
+                document.getElementById('mpVar').className = 'mp-val ' + (varPct >= 0 ? 'val-green' : 'val-red');
+                document.getElementById('mpDif').innerHTML = diff.toFixed(2).replace('.', ',');
+                document.getElementById('mpP1').innerHTML = dragStartPrice.toFixed(2).replace('.', ',');
+                document.getElementById('mpP2').innerHTML = hoverPrice.toFixed(2).replace('.', ',');
+                document.getElementById('mpInt').innerHTML = cCount + (cCount > 1 ? ' períodos' : ' período');
+                document.getElementById('mpCandles').innerHTML = cCount;
+            }
+
+            const candles = document.querySelectorAll('.candle');
+            const idx = Math.floor((x - 10) / candleWidth);
+            candles.forEach((c, i) => {
+                if (Math.abs(i - idx) <= 1) {
+                    c.style.filter = 'brightness(1.3)';
+                } else {
+                    c.style.filter = 'brightness(0.8)';
+                }
+            });
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            isDragging = false;
+            cx.style.opacity = '0';
+            cy.style.opacity = '0';
+            tt.style.opacity = '0';
+            measureBox.style.display = 'none';
+            measurePopup.style.display = 'none';
+            document.querySelectorAll('.candle').forEach(c => c.style.filter = 'none');
+        });
+    </script>
+</body>
+</html>

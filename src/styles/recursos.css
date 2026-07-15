@@ -1,0 +1,688 @@
+/* ================================================================ */
+/* Recursos page — all classes prefixed rc-                          */
+/* ================================================================ */
+
+.rc-page {
+  background: #07090f;
+  color: #fff;
+  overflow-x: clip;
+}
+
+/* ---------------- shared type ---------------- */
+
+.rc-eyebrow {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--pf-blue-light);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rc-h2 {
+  margin: 18px 0 0;
+  font-family: "Inter Display", "Inter", sans-serif;
+  font-size: clamp(28px, 4.4vw, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.rc-sub {
+  margin: 14px auto 0;
+  max-width: 560px;
+  color: var(--muted);
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.6;
+}
+
+.rc-body {
+  margin: 18px 0 26px;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.rc-section-heading {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+/* ---------------- reveal system ---------------- */
+
+.rc-hero,
+.rc-tools,
+.rc-web,
+.rc-mobile,
+.rc-why,
+.rc-final {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rc-hero.is-visible,
+.rc-tools.is-visible,
+.rc-web.is-visible,
+.rc-mobile.is-visible,
+.rc-why.is-visible,
+.rc-final.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================================================================ */
+/* Hero                                                              */
+/* ================================================================ */
+
+.rc-hero {
+  position: relative;
+  min-height: min(92vh, 860px);
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + 110px) 24px 110px;
+  overflow: hidden;
+}
+
+.rc-hero-bg,
+.rc-hero-bg > * {
+  position: absolute;
+  inset: 0;
+}
+
+.rc-hero-bg canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.rc-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 50% 42%, rgba(7, 9, 15, 0) 0%, rgba(7, 9, 15, 0.55) 72%, #07090f 100%),
+    linear-gradient(to bottom, rgba(7, 9, 15, 0.55), rgba(7, 9, 15, 0.15) 34%, rgba(7, 9, 15, 0.9) 92%, #07090f 100%);
+  pointer-events: none;
+}
+
+.rc-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 840px;
+  text-align: center;
+}
+
+.rc-hero-title {
+  margin: 22px 0 0;
+  font-family: "Inter Display", "Inter", sans-serif;
+  font-size: clamp(38px, 7vw, 76px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.rc-hero-title span {
+  background: linear-gradient(120deg, var(--pf-blue-pale) 0%, #dfe6ff 45%, var(--pf-blue-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rc-hero-sub {
+  margin: 22px auto 34px;
+  max-width: 580px;
+  color: var(--muted);
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.6;
+}
+
+.rc-hero .button-row {
+  justify-content: center;
+}
+
+/* ================================================================ */
+/* Tools showcase                                                    */
+/* ================================================================ */
+
+.rc-tools {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 90px 24px 110px;
+}
+
+/* ---------------- tools body: category columns of dense rows ---------------- */
+
+.rc-tools-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.rc-tool-col {
+  border-left: 1px solid var(--line);
+}
+
+.rc-tool-col:first-child {
+  border-left: none;
+}
+
+.rc-tool-col-title {
+  margin: 0;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--line);
+}
+
+.rc-tool-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.rc-tool-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: none;
+  border-top: 1px solid var(--line);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.rc-tool-col > .rc-tool-rows > .rc-tool-row:first-child {
+  border-top: none;
+}
+
+.rc-tool-row:hover {
+  background: rgba(5, 116, 222, 0.1);
+}
+
+.rc-tool-row-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.rc-tool-row-icon img {
+  width: 18px;
+  height: 18px;
+}
+
+.rc-tool-row-name {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .rc-tools-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rc-tool-col:nth-child(3) {
+    border-left: none;
+  }
+
+  .rc-tool-col:nth-child(3),
+  .rc-tool-col:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 560px) {
+  .rc-tools-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .rc-tool-col {
+    border-left: none;
+  }
+
+  .rc-tool-col:not(:first-child) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* ---------------- tool detail modal ---------------- */
+
+.rc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(4, 6, 12, 0.72);
+  backdrop-filter: blur(6px);
+  animation: rc-modal-fade 0.25s ease;
+}
+
+@keyframes rc-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* The modal reuses the home page's real .resource-power-card markup verbatim
+   (same size, colors, animation, title/text/icon) — this wrapper only gives
+   that absolutely-positioned card a sized, relative positioning context, and
+   floats a close button at its corner. Nothing else is added or restyled. */
+.rc-modal-track {
+  position: relative;
+  width: min(620px, calc(100vw - 72px));
+  height: 470px;
+  max-height: calc(100vh - 48px);
+  animation: rc-modal-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes rc-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rc-modal-track .resource-power-card {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  transform: none;
+}
+
+.rc-modal-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #14161d;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.rc-modal-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rc-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ================================================================ */
+/* Profit Web                                                        */
+/* ================================================================ */
+
+.rc-web {
+  position: relative;
+  padding: 60px 24px 90px;
+  overflow: hidden;
+}
+
+.rc-web-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.rc-web-visual {
+  position: relative;
+}
+
+.rc-web-glow {
+  position: absolute;
+  inset: -15%;
+  background: radial-gradient(60% 55% at 70% 30%, rgba(56, 189, 248, 0.28), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.rc-web-visual img {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1624 / 901;
+  object-fit: contain;
+  filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.55));
+}
+
+/* ================================================================ */
+/* Mobile                                                            */
+/* ================================================================ */
+
+.rc-mobile {
+  position: relative;
+  padding: 90px 24px;
+  overflow: hidden;
+}
+
+.rc-mobile-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 900px;
+  height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(5, 116, 222, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.rc-mobile-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.rc-mobile-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(320px, 46vw, 620px);
+}
+
+.rc-mobile-visual img {
+  height: auto;
+  width: auto;
+  max-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  filter: drop-shadow(0 44px 80px rgba(0, 0, 0, 0.6));
+}
+
+.rc-inline-stat {
+  color: var(--pf-blue-light);
+  font-weight: 700;
+}
+
+.rc-store-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.rc-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.rc-store:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.rc-store svg {
+  width: 26px;
+  height: 26px;
+  color: #fff;
+}
+
+.rc-store-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.rc-store-text small {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ================================================================ */
+/* Why Profit                                                        */
+/* ================================================================ */
+
+.rc-why {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 90px 24px;
+}
+
+.rc-why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.rc-why-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease calc(var(--i) * 110ms),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 110ms),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.rc-why-card.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.rc-why-card:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 40px rgba(5, 116, 222, 0.14);
+}
+
+.rc-why-spot {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    560px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgba(56, 189, 248, 0.16),
+    rgba(56, 189, 248, 0.06) 45%,
+    transparent 78%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.rc-why-card:hover .rc-why-spot {
+  opacity: 1;
+}
+
+.rc-why-media {
+  height: 240px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.rc-why-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rc-why-card:hover .rc-why-media img {
+  transform: scale(1.04);
+}
+
+.rc-why-copy {
+  position: relative;
+  padding: 26px 28px 30px;
+}
+
+.rc-why-copy h3 {
+  margin: 0 0 10px;
+  font-family: "Inter Display", "Inter", sans-serif;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.rc-why-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ================================================================ */
+/* Final CTA                                                         */
+/* ================================================================ */
+
+.rc-final {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 110px 24px 140px;
+  text-align: center;
+  overflow: visible;
+}
+
+.rc-final-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -120px;
+  width: 820px;
+  height: 480px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(5, 116, 222, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
+.rc-final .rc-h2,
+.rc-final .rc-sub,
+.rc-final .button-row {
+  position: relative;
+}
+
+.rc-final .button-row {
+  justify-content: center;
+  margin-top: 32px;
+}
+
+/* ================================================================ */
+/* Responsive                                                        */
+/* ================================================================ */
+
+@media (max-width: 960px) {
+  .rc-web-inner,
+  .rc-mobile-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .rc-web-copy,
+  .rc-mobile-copy {
+    text-align: center;
+  }
+
+  .rc-web-copy .rc-body,
+  .rc-mobile-copy .rc-body {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rc-web-copy .button-row,
+  .rc-store-row {
+    justify-content: center;
+  }
+
+  .rc-mobile-inner {
+    gap: 48px;
+  }
+
+  .rc-mobile-visual {
+    order: 2;
+  }
+
+  .rc-why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .rc-hero-tools {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .rc-why-media {
+    height: 190px;
+  }
+
+  .rc-store {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* ================================================================ */
+/* Reduced motion                                                    */
+/* ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .rc-hero,
+  .rc-tools,
+  .rc-web,
+  .rc-mobile,
+  .rc-why,
+  .rc-final,
+  .rc-why-card,
+  .rc-hero-tool,
+  .rc-chip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+
+  .rc-hero-tool:hover,
+  .rc-chip:hover,
+  .rc-store:hover,
+  .rc-pill:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,677 @@
+/* ================================================================ */
+/* Contato page — all classes ct- prefixed                          */
+/* ================================================================ */
+
+.ct-page {
+  background: #07090f;
+  color: #fff;
+  overflow-x: clip;
+}
+
+/* ---------- shared type ---------- */
+
+.ct-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(154, 220, 255, 0.85);
+}
+
+.ct-h2 {
+  margin: 10px 0 0;
+  font-family: "Inter Display", "Inter", sans-serif;
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.ct-body {
+  margin: 16px 0 0;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ---------- reveal ---------- */
+
+.ct-channels,
+.ct-formsec,
+.ct-offices,
+.ct-final {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-channels.is-visible,
+.ct-formsec.is-visible,
+.ct-offices.is-visible,
+.ct-final.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children */
+.ct-channel,
+.ct-office {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.is-visible .ct-channel,
+.is-visible .ct-office {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================================================================ */
+/* Hero                                                              */
+/* ================================================================ */
+
+.ct-hero {
+  position: relative;
+  min-height: 52vh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + 110px) 24px 90px;
+  overflow: hidden;
+}
+
+.ct-hero-veil {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+}
+
+.ct-hero-veil canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ct-hero-fade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 50% 30%, rgba(7, 9, 15, 0) 0%, rgba(7, 9, 15, 0.55) 70%, #07090f 100%),
+    linear-gradient(to bottom, rgba(7, 9, 15, 0.35), rgba(7, 9, 15, 0) 30%, rgba(7, 9, 15, 0) 55%, #07090f 100%);
+}
+
+.ct-hero-copy {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: ct-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ct-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ct-hero-title {
+  margin: 0;
+  font-family: "Inter Display", "Inter", sans-serif;
+  font-size: clamp(44px, 7vw, 78px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, 0.6));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ct-hero-sub {
+  margin: 18px auto 0;
+  max-width: 460px;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ================================================================ */
+/* Channels                                                          */
+/* ================================================================ */
+
+.ct-channels {
+  padding: 30px 24px 90px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.ct-channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.ct-channel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 26px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(12px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease,
+    opacity 0.7s ease;
+}
+
+.ct-channel:hover {
+  transform: translateY(-5px);
+  border-color: rgba(154, 220, 255, 0.35);
+  box-shadow: 0 18px 50px rgba(5, 116, 222, 0.16), inset 0 0 30px rgba(154, 220, 255, 0.04);
+}
+
+.ct-channel-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(154, 220, 255, 0.25);
+  background: rgba(5, 116, 222, 0.14);
+  color: #9adcff;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.ct-channel:hover .ct-channel-icon {
+  background: rgba(5, 116, 222, 0.3);
+  color: #fff;
+}
+
+.ct-channel-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ct-channel h3 {
+  margin: 18px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ct-channel p {
+  margin: 10px 0 20px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--muted);
+  flex: 1;
+}
+
+.ct-channel-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9adcff;
+  transition: color 0.25s ease;
+}
+
+.ct-channel-mail svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-channel-mail:hover {
+  color: #fff;
+}
+
+.ct-channel-mail:hover svg {
+  transform: translateX(4px);
+}
+
+/* ================================================================ */
+/* Form section                                                      */
+/* ================================================================ */
+
+.ct-formsec {
+  position: relative;
+  padding: 70px 24px 110px;
+}
+
+.ct-formsec-glow {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 900px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(5, 116, 222, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.ct-formsec-inner {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  gap: 60px;
+  align-items: center;
+}
+
+.ct-formsec-copy .ct-h2 {
+  max-width: 440px;
+}
+
+.ct-faq-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #9adcff;
+  transition: color 0.25s ease;
+}
+
+.ct-faq-link svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-faq-link:hover {
+  color: #fff;
+}
+
+.ct-faq-link:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---- form card ---- */
+
+.ct-form-card {
+  position: relative;
+  padding: 34px 32px 36px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(16px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.ct-form-title {
+  margin: 0 0 22px;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ct-field {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.ct-field span {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ct-field input,
+.ct-field select,
+.ct-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  resize: vertical;
+}
+
+.ct-field input::placeholder,
+.ct-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ct-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239adcff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+.ct-field select:invalid {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ct-field select option {
+  background: #0d1017;
+  color: #fff;
+}
+
+.ct-field input:focus,
+.ct-field select:focus,
+.ct-field textarea:focus {
+  border-color: rgba(5, 116, 222, 0.75);
+  box-shadow: 0 0 0 3px rgba(5, 116, 222, 0.22), 0 0 24px rgba(5, 116, 222, 0.18);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ct-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--pf-blue-deep), var(--pf-blue-light) 55%, var(--pf-blue-deep));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 10px 30px rgba(5, 116, 222, 0.3);
+}
+
+.ct-submit svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-submit:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 42px rgba(5, 116, 222, 0.42);
+}
+
+.ct-submit:hover svg {
+  transform: translateX(4px);
+}
+
+.ct-submit:active {
+  transform: translateY(0);
+}
+
+/* ---- success state ---- */
+
+.ct-form-success {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-height: 420px;
+  align-content: center;
+  animation: ct-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ct-success-ring {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(5, 116, 222, 0.12);
+  box-shadow: 0 0 50px rgba(5, 116, 222, 0.35);
+}
+
+.ct-success-ring svg {
+  width: 52px;
+  height: 52px;
+}
+
+.ct-success-circle {
+  stroke: #9adcff;
+  stroke-width: 2;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: ct-stroke 0.7s cubic-bezier(0.65, 0, 0.45, 1) 0.1s forwards;
+}
+
+.ct-success-check {
+  stroke: #fff;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: ct-stroke 0.45s cubic-bezier(0.65, 0, 0.45, 1) 0.7s forwards;
+}
+
+@keyframes ct-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ct-form-success h3 {
+  margin: 22px 0 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.ct-form-success p {
+  margin: 8px 0 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+/* ================================================================ */
+/* Offices                                                           */
+/* ================================================================ */
+
+.ct-offices {
+  padding: 40px 24px 100px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.ct-offices-heading {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.ct-offices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.ct-office {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease,
+    opacity 0.7s ease;
+}
+
+.ct-office:hover {
+  transform: translateY(-5px);
+  border-color: rgba(154, 220, 255, 0.3);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.45);
+}
+
+.ct-office-photo {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.ct-office-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ct-office:hover .ct-office-photo img {
+  transform: scale(1.09);
+}
+
+.ct-office-info {
+  padding: 22px 24px 26px;
+}
+
+.ct-office-info h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ct-office-tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: none;
+  background: var(--pf-blue);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.ct-office-info p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ct-office-zip {
+  color: var(--muted) !important;
+  font-size: 13px !important;
+}
+
+/* ================================================================ */
+/* Final CTA                                                         */
+/* ================================================================ */
+
+.ct-final {
+  position: relative;
+  text-align: center;
+  padding: 90px 24px 130px;
+  overflow: hidden;
+}
+
+.ct-final-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -240px;
+  width: 860px;
+  height: 520px;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(5, 116, 222, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
+.ct-final .ct-h2 {
+  position: relative;
+}
+
+.ct-final .ct-body {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.ct-final .button {
+  position: relative;
+}
+
+/* ================================================================ */
+/* Responsive                                                        */
+/* ================================================================ */
+
+@media (max-width: 900px) {
+  .ct-formsec-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ct-hero {
+    padding: calc(var(--nav-h) + 80px) 20px 64px;
+    min-height: 44vh;
+  }
+
+  .ct-channels,
+  .ct-offices {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .ct-channel {
+    padding: 24px 20px;
+  }
+
+  .ct-form-card {
+    padding: 26px 20px 28px;
+  }
+
+  .ct-formsec {
+    padding: 50px 18px 80px;
+  }
+}
+
+/* ================================================================ */
+/* Reduced motion                                                    */
+/* ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-hero-copy,
+  .ct-channels,
+  .ct-formsec,
+  .ct-offices,
+  .ct-final,
+  .ct-channel,
+  .ct-office,
+  .ct-form-success {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .ct-success-circle,
+  .ct-success-check {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .ct-office-photo img,
+  .ct-channel-mail svg,
+  .ct-faq-link svg,
+  .ct-submit svg {
+    transition: none;
+  }
+}

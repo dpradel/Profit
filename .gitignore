@@ -1,0 +1,7 @@
+node_modules
+dist
+.backup
+backups
+.impeccable
+.superpowers
+.claude/settings.local.json

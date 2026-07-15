@@ -1,0 +1,22 @@
+{
+  "name": "umbrel-rebuild",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@studio-freight/lenis": "^1.0.42",
+    "@vitejs/plugin-react": "^5.1.1",
+    "ogl": "^1.0.11",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "^0.185.1",
+    "vite": "^7.2.4"
+  }
+}

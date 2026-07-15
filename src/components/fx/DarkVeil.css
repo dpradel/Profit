@@ -1,0 +1,9 @@
+.darkveil-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* The underlying pattern is a fixed multi-hue noise field — hueShift alone
+     only rotates it, it can't make it monochrome. Strip all inherent color
+     with grayscale, then recolor uniformly to Profit blue. */
+  filter: grayscale(1) sepia(1) hue-rotate(180deg) saturate(5) brightness(1.05);
+}
